@@ -46,7 +46,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="Domain.Dtos\Domain.Dtos.csproj" />
+      <ProjectReference Include="Domain.Persistence\Domain.Persistence.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-using de_todo_chill.Contexts;
+using Domain.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

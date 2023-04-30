@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using de_todo_chill.Interfaces;
 using Domain.Entities.Interfaces;
 
-namespace de_todo_chill.Models;
+namespace Domain.Entities.Models;
 
 public class Product : IEntity<int>, INamed, IValuable
 {

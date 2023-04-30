@@ -8,4 +8,9 @@
         <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Domain.DataAccess\Domain.DataAccess.csproj" />
+      <ProjectReference Include="..\Domain.Dtos\Domain.Dtos.csproj" />
+    </ItemGroup>
+
 </Project>

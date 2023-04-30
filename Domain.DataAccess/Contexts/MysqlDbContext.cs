@@ -1,8 +1,7 @@
-﻿using de_todo_chill.Models;
-using Domain.Entities.Models;
+﻿using Domain.Entities.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace de_todo_chill.Contexts;
+namespace Domain.Contexts;
 
 public class MysqlDbContext: DbContext
 {

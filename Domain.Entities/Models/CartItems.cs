@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using de_todo_chill.Interfaces;
-using de_todo_chill.Models;
 using Domain.Entities.Interfaces;
 
 namespace Domain.Entities.Models;

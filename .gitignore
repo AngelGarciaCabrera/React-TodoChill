@@ -3,4 +3,5 @@ obj/
 .idea/
 /packages/
 riderModule.iml
+/Migrations/
 /_ReSharper.Caches/+

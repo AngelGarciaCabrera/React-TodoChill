@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using de_todo_chill.Interfaces;
 using Domain.Entities.Interfaces;
-using Domain.Entities.Models;
 
-namespace de_todo_chill.Models;
+namespace Domain.Entities.Models;
 
 /*Sugerencias*/
 public class Suggestion : IEntity<int>, IDescription
@@ -15,6 +13,7 @@ public class Suggestion : IEntity<int>, IDescription
     [StringLength(50)]
     public string Description { set; get; }
 
+    public int UserId { set; get; }
     public virtual User User { set; get; }
 
     public string GetDescription()
