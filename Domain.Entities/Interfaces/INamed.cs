@@ -2,7 +2,7 @@
 
 public interface INamed
 {
-    string getName();
+    string GetName();
 
-    void setName(string name);
+    void SetName(string name);
 }

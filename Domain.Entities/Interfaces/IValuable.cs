@@ -2,6 +2,6 @@
 
 public interface IValuable
 {
-    double getPrice();
-    void setPrice(double p);
+    double GetPrice();
+    void SetPrice(double p);
 }
