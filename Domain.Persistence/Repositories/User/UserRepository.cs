@@ -5,7 +5,7 @@ namespace Domain.Persistence.Repositories.User;
 
 public class UserRepository : IUserRepository
 {
-    private MysqlDbContext _ctx;
+    private readonly MysqlDbContext _ctx;
 
     public UserRepository(MysqlDbContext ctx)
     {

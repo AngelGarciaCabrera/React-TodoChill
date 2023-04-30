@@ -13,14 +13,14 @@ public class CartItemRepository : ICartItemRepository
         _ctx = ctx;
     }
 
-    public Entities.Models.CartItems? AddEntity(Entities.Models.CartItems cart)
+    public Entities.Models.CartItem? AddEntity(Entities.Models.CartItem cart)
     {
         var entityEntry = _ctx.CartItems.Add(cart);
 
         return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
     }
 
-    public Entities.Models.CartItems? UpdateEntity(Entities.Models.CartItems cart)
+    public Entities.Models.CartItem? UpdateEntity(Entities.Models.CartItem cart)
     {
         if (cart.Id == string.Empty)
         {
@@ -32,12 +32,12 @@ public class CartItemRepository : ICartItemRepository
         return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
     }
 
-    public ICollection<Entities.Models.CartItems> GetEntities(int page)
+    public ICollection<Entities.Models.CartItem> GetEntities(int page)
     {
         return GetEntities(page, IUserRepository.DEFAULT_LIST_CONTENT);
     }
 
-    public ICollection<Entities.Models.CartItems> GetEntities(int page, int maxRecords)
+    public ICollection<Entities.Models.CartItem> GetEntities(int page, int maxRecords)
     {
         return _ctx.CartItems
             .OrderBy(c => c.UserId)
@@ -46,7 +46,7 @@ public class CartItemRepository : ICartItemRepository
             .ToList();
     }
 
-    public Entities.Models.CartItems? GetEntityBy(string id)
+    public Entities.Models.CartItem? GetEntityBy(string id)
     {
         return _ctx.CartItems.Find(id);
     }
@@ -56,27 +56,28 @@ public class CartItemRepository : ICartItemRepository
         return _ctx.CartItems.Any(u => u.Id == id);
     }
 
-    public bool Exists(Entities.Models.CartItems cart)
+    public bool Exists(Entities.Models.CartItem cart)
     {
         return Exists(cart.Id);
     }
 
-    public Entities.Models.CartItems? DeleteEntity(string id)
+    public Entities.Models.CartItem? DeleteEntity(string id)
     {
         var product = GetEntityBy(id);
 
         return product == null ? null : _ctx.CartItems.Remove(product).Entity;
     }
 
-    public Entities.Models.CartItems? GetBy(Entities.Models.User u)
+    public ICollection<Entities.Models.CartItem>? GetBy(Entities.Models.User u)
     {
         return _ctx.CartItems
-            .FirstOrDefault(c => c.UserId == u.Id);
+            .Where(c => c.UserId == u.Id)
+            .ToList();
     }
 
-    public ICollection<Entities.Models.CartItems>? GetBy(Entities.Models.Product p)
+    public ICollection<Entities.Models.CartItem>? GetBy(Entities.Models.Product p)
     {
-        return _ctx.CartItems.Where(c => c.Products.Contains(p))
+        return _ctx.CartItems.Where(c => c.ProductId == p.Id)
             .ToList();
     }
 }

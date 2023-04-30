@@ -20,6 +20,6 @@ public class MysqlDbContext: DbContext
 
     public virtual DbSet<User> Users { set; get; }
     public virtual DbSet<Product> Products { set; get; }
-    public virtual DbSet<CartItems> CartItems { set; get; }
+    public virtual DbSet<CartItem> CartItems { set; get; }
     public virtual DbSet<Suggestion> Suggestions { set; get; }
 }

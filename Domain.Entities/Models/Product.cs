@@ -5,7 +5,7 @@ using Domain.Entities.Interfaces;
 
 namespace Domain.Entities.Models;
 
-public class Product : IEntity<int>, INamed, IValuable
+public class Product : IEntity<int>, INamed, IValuable, IQuantified
 {
     [Key] public int Id { get; set; }
 
@@ -18,7 +18,11 @@ public class Product : IEntity<int>, INamed, IValuable
     public string Description { set; get; }
 
     [Column]
+    [Range(0D, 10_000D)]
     public double Price { set; get; }
+
+    [Range(0, int.MaxValue)]
+    public int Quantity { get; set; }
 
     public int GetId()
     {
@@ -48,5 +52,15 @@ public class Product : IEntity<int>, INamed, IValuable
     public void SetPrice(double p)
     {
         Price = p;
+    }
+
+    public int GetQuantity()
+    {
+        return Quantity;
+    }
+
+    public void GetQuantity(int v)
+    {
+        Quantity = v;
     }
 }

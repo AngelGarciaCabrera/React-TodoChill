@@ -28,6 +28,8 @@ public class User : IEntity<int>, IDated, INamed, IEmail
     [StringLength(50)]
     public string Telephone { set; get; }
 
+    public virtual ICollection<CartItem> CartProducts { get; }
+
     public DateTime? GetDate()
     {
         return Birthday;
