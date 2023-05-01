@@ -3,7 +3,7 @@ using Domain.Entities.Models;
 
 namespace de_todo_chill.Domain.us.Mappers;
 
-public class CartItemMapper
+internal class CartItemMapper : IEntityMapper<CartItem, CartItemDto>
 {
     private static CartItemMapper? _mapper;
 

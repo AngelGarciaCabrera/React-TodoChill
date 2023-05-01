@@ -3,7 +3,7 @@ using Domain.Entities.Models;
 
 namespace de_todo_chill.Domain.us.Mappers;
 
-public class UserMapper
+internal class UserMapper : IEntityMapper<User, UserDto>
 {
     private static UserMapper? _mapper;
         

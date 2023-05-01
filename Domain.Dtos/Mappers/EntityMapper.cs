@@ -3,6 +3,8 @@ using Domain.Entities.Models;
 
 namespace de_todo_chill.Domain.us.Mappers;
 
+/**General class to map entities to its DTO'S.*/
+// TODO add scope to application
 public class EntityMapper
 {
     #region Users
@@ -46,6 +48,19 @@ public class EntityMapper
     }
 
     #endregion
+
+    #region Suggestion
+
+    public Suggestion MapTo(SuggestionDto u)
+    {
+        return SuggestionMapper.GetInstance().MapTo(u);
+    }
     
-    
+    public SuggestionDto MapFrom(Suggestion u)
+    {
+        return SuggestionMapper.GetInstance().MapFrom(u);
+    }
+
+
+    #endregion
 }
