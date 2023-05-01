@@ -1,6 +1,8 @@
 ﻿using de_todo_chill.Domain.us.Mappers;
+using Domain.Authentication.Auth;
 using Domain.Dtos.Dtos;
 using Domain.Persistence.Repositories.User;
+using Microsoft.Extensions.Options;
 
 namespace Domain.Persistence.Services;
 

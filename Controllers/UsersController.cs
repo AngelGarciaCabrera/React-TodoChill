@@ -1,6 +1,8 @@
-﻿using Domain.Dtos.Dtos;
+﻿using Domain.Authentication.Auth;
+using Domain.Dtos.Dtos;
 using Domain.Persistence.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace de_todo_chill.Controllers;
 
@@ -10,11 +12,14 @@ public class UsersController : ControllerBase
 {
     private readonly IUserService _service;
     private readonly ILogger<UsersController> _logger;
+    private readonly AppAuthSettings _authSettings;
 
-    public UsersController(ILogger<UsersController> logger, IUserService service)
+    public UsersController(ILogger<UsersController> logger, IUserService service,
+        IOptions<AppAuthSettings> authSettings)
     {
         _logger = logger;
         _service = service;
+        _authSettings = authSettings.Value;
     }
 
     [HttpGet("All/{page:int}/{maxRecords:int?}")]
@@ -38,11 +43,13 @@ public class UsersController : ControllerBase
     {
         if (user.Id != 0)
         {
-            return Task.FromResult<IActionResult>(BadRequest());
+            return Task.FromResult<IActionResult>(
+                BadRequest(new { message = "Entity field values not supported." })
+            );
         }
 
         return Task.FromResult<IActionResult>(Created(
-            "",
+            "Created!",
             _service.Create(user)
         ));
     }
@@ -50,9 +57,11 @@ public class UsersController : ControllerBase
     [HttpPut("Update/{id:int}")]
     public Task<IActionResult> Update(int id, [FromBody] UserDto user)
     {
-        if (id == 0)
+        if (id <= 0)
         {
-            return Task.FromResult<IActionResult>(BadRequest());
+            return Task.FromResult<IActionResult>(BadRequest(
+                new { message = "Entity must contain valid fields." }
+            ));
         }
 
         user.Id = id;
@@ -61,7 +70,7 @@ public class UsersController : ControllerBase
             _service.Update(user)
         ));
     }
-    
+
     [HttpDelete("Remove/{id:int}")]
     public Task<IActionResult> Delete(int id)
     {

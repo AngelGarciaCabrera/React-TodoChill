@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Domain.Authentication\Domain.Authentication.csproj" />
       <ProjectReference Include="..\Domain.DataAccess\Domain.DataAccess.csproj" />
       <ProjectReference Include="..\Domain.Dtos\Domain.Dtos.csproj" />
     </ItemGroup>
