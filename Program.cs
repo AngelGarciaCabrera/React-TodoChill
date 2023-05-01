@@ -1,5 +1,6 @@
 using System.Text;
 using de_todo_chill.Domain.us.Mappers;
+using Domain.Authentication.Auth;
 using Domain.Contexts;
 using Domain.Persistence.Repositories.CartItems;
 using Domain.Persistence.Repositories.Product;
@@ -8,7 +9,6 @@ using Domain.Persistence.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using AppAuthSettings = Domain.Authentication.Auth.AppAuthSettings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -69,7 +69,7 @@ var appSettingsValues = builder.Configuration.GetSection("AppSettings");
 builder.Services.Configure<AppAuthSettings>(appSettingsValues);
 
 var appAuthSettingsInstance = appSettingsValues.Get<AppAuthSettings>();
-var keyBytes = Encoding.ASCII.GetBytes(appAuthSettingsInstance.Secret);
+var keyBytes = Encoding.ASCII.GetBytes(appAuthSettingsInstance.SecretAuth);
 
 builder.Services.AddAuthentication(opt =>
 {
@@ -91,6 +91,7 @@ builder.Services.AddAuthentication(opt =>
 #endregion
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -22,23 +22,25 @@ internal class UserMapper : IEntityMapper<User, UserDto>
         {
             Id = u.Id,
             Name = u.Name,
-            Email = u.Email,
             Surname = u.Surname,
             Telephone = u.Telephone,
             Birthday = u.BirthDay,
+            CredentialId = u.Credentials.Id,
         };
     }
         
     public UserDto MapFrom(User u)
     {
+        var credentials = CredentialsMapper.GetInstance().MapFrom(u.Credentials);
+        
         return new UserDto
         {
             Id = u.Id,
             Name = u.Name,
-            Email = u.Email,
             Surname = u.Surname,
             Telephone = u.Telephone,
             BirthDay = u.Birthday,
+            Credentials = credentials,
         };
     }
 }

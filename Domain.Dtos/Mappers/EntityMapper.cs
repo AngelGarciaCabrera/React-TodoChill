@@ -25,6 +25,20 @@ public class EntityMapper
 
     #endregion
 
+    #region Credentials
+
+    public Credentials MapTo(CredentialsDto? u)
+    {
+        return u != null ? CredentialsMapper.GetInstance().MapTo(u) : new Credentials();
+    }
+
+    public CredentialsDto MapFrom(Credentials? u)
+    {
+        return u != null ? CredentialsMapper.GetInstance().MapFrom(u) : new CredentialsDto();
+    }
+
+    #endregion
+
     #region Products
 
     public Product MapTo(ProductDto? u)
