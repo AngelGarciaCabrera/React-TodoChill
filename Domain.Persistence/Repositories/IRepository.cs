@@ -1,4 +1,5 @@
-﻿using Domain.Entities.Interfaces;
+﻿using System.ComponentModel.DataAnnotations;
+using Domain.Entities.Interfaces;
 
 namespace Domain.Persistence.Repositories;
 
@@ -10,8 +11,8 @@ public interface IRepository<ID, T> where T : IEntity<ID>
 
     T? UpdateEntity(T t);
 
-    ICollection<T> GetEntities(int page);
-    ICollection<T> GetEntities(int page, int maxRecords);
+    ICollection<T> GetEntities([Range(1, int.MaxValue)] int page);
+    ICollection<T> GetEntities([Range(1, int.MaxValue)] int page, int maxRecords);
     
     T? GetEntityBy(ID id);
 
