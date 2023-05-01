@@ -7,60 +7,63 @@ namespace de_todo_chill.Domain.us.Mappers;
 // TODO add scope to application
 public class EntityMapper
 {
-    #region Users
-
-    public User MapTo(UserDto u)
+    public EntityMapper()
     {
-        return UserMapper.GetInstance().MapTo(u);
     }
 
-    public UserDto MapFrom(User u)
+    #region Users
+
+    public User MapTo(UserDto? u)
     {
-        return UserMapper.GetInstance().MapFrom(u);
+        return u != null ? UserMapper.GetInstance().MapTo(u) : new User();
+    }
+
+    public UserDto MapFrom(User? u)
+    {
+        return u != null ? UserMapper.GetInstance().MapFrom(u) : new UserDto();
     }
 
     #endregion
 
     #region Products
 
-    public Product MapTo(ProductDto u)
+    public Product MapTo(ProductDto? u)
     {
-        return ProductMapper.GetInstance().MapTo(u);
+        return u != null ? ProductMapper.GetInstance().MapTo(u) : new Product();
     }
 
-    public ProductDto MapFrom(Product u)
+    public ProductDto MapFrom(Product? u)
     {
-        return ProductMapper.GetInstance().MapFrom(u);
+        return u != null ? ProductMapper.GetInstance().MapFrom(u) : new ProductDto();
     }
 
     #endregion
 
     #region CartItem
 
-    public CartItem MapTo(CartItemDto u)
+    public CartItem MapTo(CartItemDto? u)
     {
-        return CartItemMapper.GetInstance().MapTo(u);
+        return u != null ? CartItemMapper.GetInstance().MapTo(u) : new CartItem();
     }
-    
-    public CartItemDto MapFrom(CartItem u)
+
+    public CartItemDto MapFrom(CartItem? u)
     {
-        return CartItemMapper.GetInstance().MapFrom(u);
+        return u != null ? CartItemMapper.GetInstance().MapFrom(u) : new CartItemDto();
     }
 
     #endregion
 
     #region Suggestion
 
-    public Suggestion MapTo(SuggestionDto u)
+    public Suggestion MapTo(SuggestionDto? u)
     {
-        return SuggestionMapper.GetInstance().MapTo(u);
-    }
-    
-    public SuggestionDto MapFrom(Suggestion u)
-    {
-        return SuggestionMapper.GetInstance().MapFrom(u);
+        return u != null ? SuggestionMapper.GetInstance().MapTo(u) : new Suggestion();
     }
 
+    public SuggestionDto MapFrom(Suggestion? u)
+    {
+        return u != null ? SuggestionMapper.GetInstance().MapFrom(u) : new SuggestionDto();
+    }
 
     #endregion
 }

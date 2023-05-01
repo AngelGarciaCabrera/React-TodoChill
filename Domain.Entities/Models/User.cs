@@ -39,7 +39,7 @@ public class User : IEntity<int>, IDated, INamed, IEmail
     {
         Birthday = d;
     }
-
+    
     public string GetEmail()
     {
         return Email;
