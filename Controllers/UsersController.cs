@@ -1,6 +1,4 @@
-﻿using Domain.Contexts;
-using Domain.Dtos.Dtos;
-using Domain.Entities.Models;
+﻿using Domain.Dtos.Dtos;
 using Domain.Persistence.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,33 +17,61 @@ public class UsersController : ControllerBase
         _service = service;
     }
 
-    [HttpGet("All/{page}/{maxRecords:int?}")]
-    public async Task<IActionResult> Get(int page, int? maxRecords)
+    [HttpGet("All/{page:int}/{maxRecords:int?}")]
+    public Task<IActionResult> Get(int page, int? maxRecords)
     {
-        return Ok(
+        return Task.FromResult<IActionResult>(Ok(
             _service.Get(page, maxRecords)
-        );
+        ));
     }
-    
-    [HttpGet("/{id}")]
-    public async Task<IActionResult> GetBy(int id)
+
+    [HttpGet("{id:int}")]
+    public Task<IActionResult> GetBy(int id)
     {
-        return Ok(
+        return Task.FromResult<IActionResult>(Ok(
             _service.GetBy(id)
-        );
+        ));
     }
-    
-    [HttpPost("/Add")]
-    public async Task<IActionResult> GetBy([FromBody] UserDto user)
+
+    [HttpPost("Add")]
+    public Task<IActionResult> Create([FromBody] UserDto user)
     {
         if (user.Id != 0)
         {
-            return BadRequest();
+            return Task.FromResult<IActionResult>(BadRequest());
         }
-        
-        return Created(
+
+        return Task.FromResult<IActionResult>(Created(
             "",
             _service.Create(user)
-        );
+        ));
+    }
+
+    [HttpPut("Update/{id:int}")]
+    public Task<IActionResult> Update(int id, [FromBody] UserDto user)
+    {
+        if (id == 0)
+        {
+            return Task.FromResult<IActionResult>(BadRequest());
+        }
+
+        user.Id = id;
+
+        return Task.FromResult<IActionResult>(Ok(
+            _service.Update(user)
+        ));
+    }
+    
+    [HttpDelete("Remove/{id:int}")]
+    public Task<IActionResult> Delete(int id)
+    {
+        if (id == 0)
+        {
+            return Task.FromResult<IActionResult>(BadRequest());
+        }
+
+        return Task.FromResult<IActionResult>(Ok(
+            _service.Delete(id)
+        ));
     }
 }

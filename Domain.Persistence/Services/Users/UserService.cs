@@ -48,7 +48,6 @@ public class UserService : IUserService
 
     public UserDto? Delete(int id)
     {
-        var entity = _repository.GetEntityBy(id);
-        return entity != null ? _mapper.MapFrom(_repository.UpdateEntity(entity)) : new UserDto();
+        return _mapper.MapFrom(_repository.DeleteEntity(id));
     }
 }
