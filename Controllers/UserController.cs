@@ -1,5 +1,6 @@
 ﻿using Domain.Contexts;
 using Domain.Entities.Models;
+using Domain.Persistence.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace de_todo_chill.Controllers;
@@ -8,21 +9,20 @@ namespace de_todo_chill.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly MysqlDbContext _dbContext;
+    private readonly IUserService _service;
     private readonly ILogger<UserController> _logger;
 
-    
-    public UserController(ILogger<UserController> logger, MysqlDbContext dbContext)
+    public UserController(ILogger<UserController> logger, IUserService service)
     {
         _logger = logger;
-        _dbContext = dbContext;
+        _service = service;
     }
 
-    [HttpGet(Name = "GetAllUsers")]
-
-    public IEnumerable<User> Get([FromRoute] int page)
+    [HttpGet("All/{page}/{maxRecords?}")]
+    public async Task<IActionResult> Get(int page, int? maxRecords)
     {
-        return null;
+        return Ok(
+            _service.Get(page, maxRecords)
+        );
     }
-    
 }
