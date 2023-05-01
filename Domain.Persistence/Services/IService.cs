@@ -4,6 +4,7 @@ public interface IService<ID, TD>
     where TD : class
 {
     List<TD> Get(int page, int? maxRecord);
+    TD GetBy(ID id);
     
     TD? Create(TD e);
 

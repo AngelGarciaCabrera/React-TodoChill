@@ -24,6 +24,11 @@ public class UserService : IUserService
             .ToList();
     }
 
+    public UserDto GetBy(int id)
+    {
+        return _mapper.MapFrom(_repository.GetEntityBy(id));
+    }
+
     public UserDto? Create(UserDto e)
     {
         var entity = _mapper.MapTo(e);

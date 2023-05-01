@@ -15,21 +15,35 @@ public class CartItemRepository : ICartItemRepository
 
     public Entities.Models.CartItem? AddEntity(Entities.Models.CartItem cart)
     {
-        var entityEntry = _ctx.CartItems.Add(cart);
+        try
+        {
+            var entityEntry = _ctx.CartItems.Add(cart);
 
-        return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
+            return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
+        }
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public Entities.Models.CartItem? UpdateEntity(Entities.Models.CartItem cart)
     {
-        if (cart.Id == string.Empty)
+        try
         {
-            return null;
+            if (cart.Id == string.Empty)
+            {
+                return null;
+            }
+
+            var entityEntry = _ctx.CartItems.Update(cart);
+
+            return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
         }
-
-        var entityEntry = _ctx.CartItems.Update(cart);
-
-        return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public ICollection<Entities.Models.CartItem> GetEntities(int page)
@@ -63,9 +77,16 @@ public class CartItemRepository : ICartItemRepository
 
     public Entities.Models.CartItem? DeleteEntity(string id)
     {
-        var product = GetEntityBy(id);
+        try
+        {
+            var product = GetEntityBy(id);
 
-        return product == null ? null : _ctx.CartItems.Remove(product).Entity;
+            return product == null ? null : _ctx.CartItems.Remove(product).Entity;
+        }
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public ICollection<Entities.Models.CartItem>? GetBy(Entities.Models.User u)

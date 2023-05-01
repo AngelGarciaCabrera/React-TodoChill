@@ -15,21 +15,35 @@ public class SuggestionRepository : ISuggestionRepository
 
     public Entities.Models.Suggestion? AddEntity(Entities.Models.Suggestion suggestion)
     {
-        var entityEntry = _ctx.Suggestions.Add(suggestion);
+        try
+        {
+            var entityEntry = _ctx.Suggestions.Add(suggestion);
 
-        return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
+            return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
+        }
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public Entities.Models.Suggestion? UpdateEntity(Entities.Models.Suggestion suggestion)
     {
-        if (suggestion.Id == 0)
+        try
         {
-            return null;
+            if (suggestion.Id == 0)
+            {
+                return null;
+            }
+
+            var entityEntry = _ctx.Suggestions.Update(suggestion);
+
+            return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
         }
-
-        var entityEntry = _ctx.Suggestions.Update(suggestion);
-
-        return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public ICollection<Entities.Models.Suggestion> GetEntities(int page)
@@ -63,9 +77,16 @@ public class SuggestionRepository : ISuggestionRepository
 
     public Entities.Models.Suggestion? DeleteEntity(int id)
     {
-        var suggestion = GetEntityBy(id);
+        try
+        {
+            var suggestion = GetEntityBy(id);
 
-        return suggestion == null ? null : _ctx.Suggestions.Remove(suggestion).Entity;
+            return suggestion == null ? null : _ctx.Suggestions.Remove(suggestion).Entity;
+        }
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public Entities.Models.Suggestion? GetBy(Entities.Models.User u)

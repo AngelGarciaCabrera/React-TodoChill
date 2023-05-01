@@ -16,21 +16,35 @@ public class ProductRepository : IProductRepository
 
     public Entities.Models.Product? AddEntity(Entities.Models.Product product)
     {
-        var entityEntry = _ctx.Products.Add(product);
+        try
+        {
+            var entityEntry = _ctx.Products.Add(product);
 
-        return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
+            return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
+        }
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public Entities.Models.Product? UpdateEntity(Entities.Models.Product user)
     {
-        if (user.Id == 0)
+        try
         {
-            return null;
+            if (user.Id == 0)
+            {
+                return null;
+            }
+
+            var entityEntry = _ctx.Products.Update(user);
+
+            return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
         }
-
-        var entityEntry = _ctx.Products.Update(user);
-
-        return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public ICollection<Entities.Models.Product> GetEntities(int page)
@@ -64,8 +78,15 @@ public class ProductRepository : IProductRepository
 
     public Entities.Models.Product? DeleteEntity(int id)
     {
-        var product = GetEntityBy(id);
+        try
+        {
+            var product = GetEntityBy(id);
 
-        return product == null ? null : _ctx.Products.Remove(product).Entity;
+            return product == null ? null : _ctx.Products.Remove(product).Entity;
+        }
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 }

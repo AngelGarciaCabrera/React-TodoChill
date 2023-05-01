@@ -9,7 +9,6 @@ public class User : IEntity<int>, IDated, INamed, IEmail
 {
     [Key] public int Id { get; set; }
 
-    
     [Column]
     [StringLength(35)]
     public string Name { set; get; }
@@ -18,7 +17,7 @@ public class User : IEntity<int>, IDated, INamed, IEmail
     [StringLength(50)]
     public string Surname { set; get; }
 
-    [Column] public DateTime? Birthday { get; set; }
+    [Column(TypeName = "Date")] public DateTime? Birthday { get; set; }
 
     [Column]
     [StringLength(60)]

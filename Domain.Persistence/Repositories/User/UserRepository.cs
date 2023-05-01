@@ -14,23 +14,37 @@ public class UserRepository : IUserRepository
 
     public Entities.Models.User? AddEntity(Entities.Models.User user)
     {
-        user.Birthday ??= DateTime.Today;
+        try
+        {
+            user.Birthday ??= DateTime.Today;
 
-        var entityEntry = _ctx.Users.Add(user);
+            var entityEntry = _ctx.Users.Add(user);
 
-        return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
+            return entityEntry.State != EntityState.Added ? null : entityEntry.Entity;
+        }
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public Entities.Models.User? UpdateEntity(Entities.Models.User user)
     {
-        if (user.Id == 0)
+        try
         {
-            return null;
+            if (user.Id == 0)
+            {
+                return null;
+            }
+
+            var entityEntry = _ctx.Users.Update(user);
+
+            return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
         }
-
-        var entityEntry = _ctx.Users.Update(user);
-
-        return entityEntry.State != EntityState.Modified ? null : entityEntry.Entity;
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 
     public ICollection<Entities.Models.User> GetEntities(int page)
@@ -64,8 +78,15 @@ public class UserRepository : IUserRepository
 
     public Entities.Models.User? DeleteEntity(int id)
     {
-        var user = GetEntityBy(id);
+        try
+        {
+            var user = GetEntityBy(id);
 
-        return user == null ? null : _ctx.Users.Remove(user).Entity;
+            return user == null ? null : _ctx.Users.Remove(user).Entity;
+        }
+        finally
+        {
+            _ctx.SaveChanges();
+        }
     }
 }
