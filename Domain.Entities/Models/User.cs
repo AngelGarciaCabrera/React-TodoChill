@@ -17,7 +17,6 @@ public class User : IEntity<int>, IDated, INamed
 
     [Column] [StringLength(50)] public string Telephone { set; get; }
 
-    public string CredentialId { get; set; }
     public virtual Credentials Credentials { set; get; }
 
     public virtual ICollection<CartItem> CartProducts { get; }

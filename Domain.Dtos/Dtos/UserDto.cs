@@ -10,6 +10,6 @@ public class UserDto
     public DateTime? BirthDay { get; set; }
     public string Telephone { get; set; }
     
-    public CredentialsDto Credentials { set; get; }
+    public CredentialsDto? Credentials { set; get; }
     
 }

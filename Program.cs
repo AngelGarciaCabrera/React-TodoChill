@@ -1,11 +1,15 @@
 using System.Text;
 using de_todo_chill.Domain.us.Mappers;
 using Domain.Authentication.Auth;
+using Domain.Authentication.Tokenizer;
 using Domain.Contexts;
+using Domain.Dtos.Dtos;
 using Domain.Persistence.Repositories.CartItems;
+using Domain.Persistence.Repositories.Credentials;
 using Domain.Persistence.Repositories.Product;
 using Domain.Persistence.Repositories.User;
 using Domain.Persistence.Services;
+using Domain.Persistence.Services.Credentials;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -20,13 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Services class Injections
-#region Custom Services
 
-// Add scoped persistence entities
-// Mapper
-builder.Services.AddScoped<EntityMapper>();
-
-#endregion
 //DB Configs
 #region DB_Configurations
 //DB injection
@@ -40,9 +38,11 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 builder.Services.AddScoped<ISuggestionRepository, SuggestionRepository>();
+builder.Services.AddScoped<ICredentialRepository, CredentialRepository>();
 
 // DB Services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICredentialService, CredentialService>();
 
 #endregion
 
@@ -90,8 +90,14 @@ builder.Services.AddAuthentication(opt =>
 
 #endregion
 
-var app = builder.Build();
+#region Custom Services
+// Add scoped persistence entities
+// Mapper
+builder.Services.AddScoped<EntityMapper>();
+builder.Services.AddScoped<ITokenizer<CredentialsDto>, JwtTokenizer>();
+#endregion
 
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

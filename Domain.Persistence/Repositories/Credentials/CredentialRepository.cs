@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Contexts;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Domain.Persistence.Repositories.Credentials;
 
@@ -17,10 +18,12 @@ public class CredentialRepository : ICredentialRepository
     {
         try
         {
-            if (string.IsNullOrEmpty(c.Id))
+            if (!string.IsNullOrEmpty(c.Id) && c.Id != "0")
             {
                 return new Entities.Models.Credentials();
             }
+
+            c.Id = Guid.NewGuid().ToString().Split("-")[0];
 
             var entityEntry = _ctx.Credentials.Add(c);
 
@@ -77,7 +80,9 @@ public class CredentialRepository : ICredentialRepository
 
     public bool Exists(Entities.Models.Credentials t)
     {
-        throw new NotImplementedException();
+        return t.Id.IsNullOrEmpty() ?
+            _ctx.Credentials.Any(c => c.Email == t.Email) :
+            Exists(t.Id);
     }
 
     public Entities.Models.Credentials? DeleteEntity(string id)

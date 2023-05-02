@@ -1,8 +1,7 @@
 ﻿using de_todo_chill.Domain.us.Mappers;
-using Domain.Authentication.Auth;
 using Domain.Dtos.Dtos;
 using Domain.Persistence.Repositories.User;
-using Microsoft.Extensions.Options;
+using Domain.Persistence.Services.Credentials;
 
 namespace Domain.Persistence.Services;
 
@@ -11,11 +10,13 @@ public class UserService : IUserService
     private readonly EntityMapper _mapper;
 
     private readonly IUserRepository _repository;
+    private readonly ICredentialService _credentialService;
 
-    public UserService(IUserRepository repository, EntityMapper mapper)
+    public UserService(IUserRepository repository, EntityMapper mapper, ICredentialService credentialService)
     {
         _repository = repository;
         _mapper = mapper;
+        _credentialService = credentialService;
     }
 
     public List<UserDto> Get(int page, int? maxRecord)
@@ -33,8 +34,19 @@ public class UserService : IUserService
 
     public UserDto? Create(UserDto e)
     {
-        var entity = _mapper.MapTo(e);
-        return _mapper.MapFrom(_repository.AddEntity(entity));
+        var user = _repository.AddEntity(_mapper.MapTo(e));
+        
+        if (!_repository.Exists(user))
+        {
+            return new UserDto();
+        }
+
+        e.Id = user.Id;
+        e.Credentials.User = e;
+
+        var credentialsCreated = _credentialService.Create(e.Credentials);
+
+        return _credentialService.Exists(credentialsCreated) ? e : new UserDto();
     }
 
     public UserDto? Update(UserDto e)

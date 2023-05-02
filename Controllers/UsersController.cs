@@ -1,6 +1,7 @@
 ﻿using Domain.Authentication.Auth;
 using Domain.Dtos.Dtos;
 using Domain.Persistence.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -22,6 +23,7 @@ public class UsersController : ControllerBase
         _authSettings = authSettings.Value;
     }
 
+    [Authorize]
     [HttpGet("All/{page:int}/{maxRecords:int?}")]
     public Task<IActionResult> Get(int page, int? maxRecords)
     {
@@ -30,6 +32,7 @@ public class UsersController : ControllerBase
         ));
     }
 
+    [Authorize]
     [HttpGet("{id:int}")]
     public Task<IActionResult> GetBy(int id)
     {
@@ -54,6 +57,7 @@ public class UsersController : ControllerBase
         ));
     }
 
+    [Authorize]
     [HttpPut("Update/{id:int}")]
     public Task<IActionResult> Update(int id, [FromBody] UserDto user)
     {
@@ -71,6 +75,7 @@ public class UsersController : ControllerBase
         ));
     }
 
+    [Authorize]
     [HttpDelete("Remove/{id:int}")]
     public Task<IActionResult> Delete(int id)
     {

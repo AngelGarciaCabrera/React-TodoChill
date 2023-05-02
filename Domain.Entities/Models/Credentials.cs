@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Domain.Entities.Models;
 
 [Index(nameof(Email), IsUnique = true)]
+[Index(nameof(UserId), IsUnique = true)]
 public class Credentials : IEntity<string>, IEmail
 {
     [Key] public string Id { get; set; }

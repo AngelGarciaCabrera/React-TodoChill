@@ -3,6 +3,8 @@
 public interface IService<ID, TD>
     where TD : class
 {
+    protected const int DEFAULT_MAX_RECORDS = 5;
+
     List<TD> Get(int page, int? maxRecord);
     TD GetBy(ID id);
     

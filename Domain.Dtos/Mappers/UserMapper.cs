@@ -25,7 +25,6 @@ internal class UserMapper : IEntityMapper<User, UserDto>
             Surname = u.Surname,
             Telephone = u.Telephone,
             Birthday = u.BirthDay,
-            CredentialId = u.Credentials.Id,
         };
     }
         

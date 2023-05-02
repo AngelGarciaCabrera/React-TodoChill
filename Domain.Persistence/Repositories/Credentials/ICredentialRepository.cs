@@ -4,5 +4,5 @@ public interface ICredentialRepository : IRepository<string, Entities.Models.Cre
 {
     Entities.Models.Credentials? GetByEmail(string email);
     
-    Entities.Models.Credentials? GetByUser(int userId);
+     Entities.Models.Credentials? GetByUser(int userId);
 }
