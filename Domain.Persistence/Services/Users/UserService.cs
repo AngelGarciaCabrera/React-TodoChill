@@ -46,6 +46,7 @@ public class UserService : IUserService
 
         var credentialsCreated = _credentialService.Create(e.Credentials);
 
+        e.Credentials = credentialsCreated;
         return _credentialService.Exists(credentialsCreated) ? e : new UserDto();
     }
 

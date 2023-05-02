@@ -29,11 +29,30 @@ internal class SuggestionMapper : IEntityMapper<Suggestion, SuggestionDto>
     public SuggestionDto MapFrom(Suggestion e)
     {
         var user = UserMapper.GetInstance().MapFrom(e.User);
+        
         return new SuggestionDto()
         {
             Id = e.Id,
             Description = e.Description,
             User = user,
+        };
+    }
+
+    public Suggestion MapToWithOut(SuggestionDto e)
+    {
+        return new Suggestion()
+        {
+            Id = e.Id,
+            Description = e.Description,
+        };
+    }
+
+    public SuggestionDto MapFromWithOut(Suggestion e)
+    {
+        return new SuggestionDto()
+        {
+            Id = e.Id,
+            Description = e.Description,
         };
     }
 }

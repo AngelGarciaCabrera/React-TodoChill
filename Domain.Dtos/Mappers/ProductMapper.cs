@@ -37,4 +37,26 @@ internal class ProductMapper : IEntityMapper<Product, ProductDto>
             Price = p.Price,
         };
     }
+
+    public Product MapToWithOut(ProductDto p)
+    {
+        return new Product()
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            Price = p.Price,
+        };
+    }
+
+    public ProductDto MapFromWithOut(Product p)
+    {
+        return new ProductDto()
+        {
+            Id = p.Id,
+            Name = p.Name,
+            Description = p.Description,
+            Price = p.Price,
+        };
+    }
 }

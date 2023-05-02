@@ -37,7 +37,7 @@ public class JwtTokenizer : ITokenizer<CredentialsDto>
             Expires = DateTime.UtcNow.AddMinutes(20),
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(keyTokenSecure),
-                SecurityAlgorithms.Sha256),
+                SecurityAlgorithms.RsaSha512),
         };
 
         var token = tokenHandler.CreateToken(tokenDescriptor);

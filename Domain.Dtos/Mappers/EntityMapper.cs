@@ -22,6 +22,17 @@ public class EntityMapper
     {
         return u != null ? UserMapper.GetInstance().MapFrom(u) : new UserDto();
     }
+    public User MapToWithOut(UserDto? u)
+    {
+        return u != null ? UserMapper.GetInstance().MapToWithOut(u) : new User();
+    }
+
+    public UserDto MapFromWithOut(User? u)
+    {
+        return u != null ? UserMapper.GetInstance().MapFromWithOut(u) : new UserDto();
+    }
+    
+    
 
     #endregion
 
@@ -35,6 +46,16 @@ public class EntityMapper
     public CredentialsDto MapFrom(Credentials? u)
     {
         return u != null ? CredentialsMapper.GetInstance().MapFrom(u) : new CredentialsDto();
+    }
+    
+    public Credentials MapToWithOut(CredentialsDto? u)
+    {
+        return u != null ? CredentialsMapper.GetInstance().MapToWithOut(u) : new Credentials();
+    }
+
+    public CredentialsDto MapFromWithOut(Credentials? u)
+    {
+        return u != null ? CredentialsMapper.GetInstance().MapFromWithOut(u) : new CredentialsDto();
     }
 
     #endregion
@@ -50,6 +71,16 @@ public class EntityMapper
     {
         return u != null ? ProductMapper.GetInstance().MapFrom(u) : new ProductDto();
     }
+    
+    public Product MapToWithOut(ProductDto? u)
+    {
+        return u != null ? ProductMapper.GetInstance().MapToWithOut(u) : new Product();
+    }
+
+    public ProductDto MapFromWithOut(Product? u)
+    {
+        return u != null ? ProductMapper.GetInstance().MapFromWithOut(u) : new ProductDto();
+    }
 
     #endregion
 
@@ -64,6 +95,16 @@ public class EntityMapper
     {
         return u != null ? CartItemMapper.GetInstance().MapFrom(u) : new CartItemDto();
     }
+    
+    public CartItem MapToWithOut(CartItemDto? u)
+    {
+        return u != null ? CartItemMapper.GetInstance().MapToWithOut(u) : new CartItem();
+    }
+
+    public CartItemDto MapFromWithOut(CartItem? u)
+    {
+        return u != null ? CartItemMapper.GetInstance().MapFromWithOut(u) : new CartItemDto();
+    }
 
     #endregion
 
@@ -77,6 +118,16 @@ public class EntityMapper
     public SuggestionDto MapFrom(Suggestion? u)
     {
         return u != null ? SuggestionMapper.GetInstance().MapFrom(u) : new SuggestionDto();
+    }
+    
+    public Suggestion MapToWithOut(SuggestionDto? u)
+    {
+        return u != null ? SuggestionMapper.GetInstance().MapToWithOut(u) : new Suggestion();
+    }
+
+    public SuggestionDto MapFromWithOut(Suggestion? u)
+    {
+        return u != null ? SuggestionMapper.GetInstance().MapFromWithOut(u) : new SuggestionDto();
     }
 
     #endregion

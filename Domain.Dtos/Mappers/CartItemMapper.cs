@@ -41,4 +41,22 @@ internal class CartItemMapper : IEntityMapper<CartItem, CartItemDto>
             Quantity = c.Quantity,
         };
     }
+
+    public CartItem MapToWithOut(CartItemDto c)
+    {
+        return new CartItem()
+        {
+            Id = c.Id,
+            Quantity = c.Quantity,
+        };
+    }
+
+    public CartItemDto MapFromWithOut(CartItem c)
+    {
+        return new CartItemDto()
+        {
+            Id = c.Id,
+            Quantity = c.Quantity,
+        };
+    }
 }

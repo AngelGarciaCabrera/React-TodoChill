@@ -25,30 +25,30 @@ public class CredentialService : ICredentialService
     public CredentialsDto GetBy(string id)
     {
         var credentials = _repository.GetEntityBy(id);
-        return _mapper.MapFrom(credentials);
+        return _mapper.MapFromWithOut(credentials);
     }
 
     public CredentialsDto? Create(CredentialsDto e)
     {
         var credentials = _repository.AddEntity(_mapper.MapTo(e));
-        return _mapper.MapFrom(credentials);
+        return _mapper.MapFromWithOut(credentials);
     }
 
     public CredentialsDto? Update(CredentialsDto e)
     {
         var credentials = _repository.UpdateEntity(_mapper.MapTo(e));
-        return _mapper.MapFrom(credentials);
+        return _mapper.MapFromWithOut(credentials);
     }
 
     public bool Exists(CredentialsDto e)
     {
-        return _repository.Exists(_mapper.MapTo(e));
+        return _repository.Exists(_mapper.MapToWithOut(e));
     }
 
     public CredentialsDto? Delete(string e)
     {
         var credentials = _repository.DeleteEntity(e);
-        return _mapper.MapFrom(credentials);
+        return _mapper.MapFromWithOut(credentials);
     }
 
     public CredentialsDto? GetByEmail(string email)

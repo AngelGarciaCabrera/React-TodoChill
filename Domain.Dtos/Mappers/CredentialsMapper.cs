@@ -39,4 +39,24 @@ public class CredentialsMapper : IEntityMapper<Credentials, CredentialsDto>
             User = user
         };
     }
+
+    public Credentials MapToWithOut(CredentialsDto e)
+    {
+        return new Credentials()
+        {
+            Id = e.Id,
+            Email = e.Email,
+            Password = e.Password,
+        };
+    }
+
+    public CredentialsDto MapFromWithOut(Credentials e)
+    {
+        return new CredentialsDto()
+        {
+            Id = e.Id,
+            Email = e.Email,
+            Password = e.Password,
+        };
+    }
 }

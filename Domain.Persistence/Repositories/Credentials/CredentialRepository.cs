@@ -80,7 +80,7 @@ public class CredentialRepository : ICredentialRepository
 
     public bool Exists(Entities.Models.Credentials t)
     {
-        return t.Id.IsNullOrEmpty() ?
+        return t.Id.IsNullOrEmpty() || t.Id == "0" ?
             _ctx.Credentials.Any(c => c.Email == t.Email) :
             Exists(t.Id);
     }

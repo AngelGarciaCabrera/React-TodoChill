@@ -42,4 +42,28 @@ internal class UserMapper : IEntityMapper<User, UserDto>
             Credentials = credentials,
         };
     }
+
+    public User MapToWithOut(UserDto u)
+    {
+        return new User
+        {
+            Id = u.Id,
+            Name = u.Name,
+            Surname = u.Surname,
+            Telephone = u.Telephone,
+            Birthday = u.BirthDay,
+        };
+    }
+
+    public UserDto MapFromWithOut(User u)
+    {
+        return new UserDto
+        {
+            Id = u.Id,
+            Name = u.Name,
+            Surname = u.Surname,
+            Telephone = u.Telephone,
+            BirthDay = u.Birthday
+        };
+    }
 }
