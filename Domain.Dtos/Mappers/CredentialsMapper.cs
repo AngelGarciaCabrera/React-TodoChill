@@ -45,31 +45,30 @@ public class CredentialsMapper : IEntityDependantMapper<Credentials, Credentials
 
     public Credentials MapToWithOut(CredentialsDto? e)
     {
-        if (e == null)
-        {
-            return new Credentials();
-        }
+
+        var credentials = new Credentials();
         
-        return new Credentials()
+        if (e != null)
         {
-            Id = e.Id,
-            Email = e.Email ?? "",
-            Password = e.Password ?? "",
-        };
+            credentials.Id = e.Id;
+            credentials.Email = e.Email ?? "";
+            credentials.Password = e.Password ?? "";
+        }
+
+        return credentials;
     }
 
     public CredentialsDto MapFromWithOut(Credentials? e)
     {
-        if (e == null)
+        var credentials = new CredentialsDto();
+        
+        if (e != null)
         {
-            return new CredentialsDto();
+            credentials.Id = e.Id;
+            credentials.Email = e.Email;
+            credentials.Password = e.Password;
         }
 
-        return new CredentialsDto()
-        {
-            Id = e.Id,
-            Email = e.Email,
-            Password = e.Password,
-        };
+        return credentials;
     }
 }
