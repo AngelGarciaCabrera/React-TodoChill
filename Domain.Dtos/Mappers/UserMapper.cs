@@ -61,6 +61,11 @@ internal class UserMapper : IEntityMapper<User, UserDto>
 
     public UserDto MapFromWithOut(User? u)
     {
+        if (u == null)
+        {
+            return new UserDto();
+        }
+        
         return new UserDto
         {
             Id = u.Id,

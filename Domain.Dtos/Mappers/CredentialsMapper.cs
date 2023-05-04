@@ -20,45 +20,50 @@ public class CredentialsMapper : IEntityMapper<Credentials, CredentialsDto>
     {
         var credentials = MapToWithOut(e);
 
-        if (e == null)
+        if (e != null)
         {
-            return credentials;
+            credentials.User = UserMapper.GetInstance()
+                .MapToWithOut(e.User);
         }
 
-        return new Credentials()
-        {
-            Id = e.Id,
-            Email = e.Email,
-            Password = e.Password,
-            UserId = e.User.Id,
-        };
+        return credentials;
     }
 
     public CredentialsDto MapFrom(Credentials? e)
     {
-        var user = UserMapper.GetInstance().MapFrom(e.User);
+        var credentials = MapFromWithOut(e);
 
-        return new CredentialsDto()
+        if (e != null)
         {
-            Id = e.Id,
-            Email = e.Email,
-            Password = e.Password,
-            User = user
-        };
+            credentials.User = UserMapper.GetInstance()
+                .MapFromWithOut(e.User);
+        }
+
+        return credentials;
     }
 
     public Credentials MapToWithOut(CredentialsDto? e)
     {
+        if (e == null)
+        {
+            return new Credentials();
+        }
+        
         return new Credentials()
         {
             Id = e.Id,
-            Email = e.Email,
-            Password = e.Password,
+            Email = e.Email ?? "",
+            Password = e.Password ?? "",
         };
     }
 
     public CredentialsDto MapFromWithOut(Credentials? e)
     {
+        if (e == null)
+        {
+            return new CredentialsDto();
+        }
+
         return new CredentialsDto()
         {
             Id = e.Id,
