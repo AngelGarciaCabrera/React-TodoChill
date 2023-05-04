@@ -51,8 +51,8 @@ internal class CartItemMapper : IEntityDependantMapper<CartItem, CartItemDto>
         
         return new CartItem()
         {
-            Id = c.Id,
-            Quantity = c.Quantity,
+            Id = c.Id ?? "",
+            Quantity = c.Quantity ?? -1,
         };
     }
 

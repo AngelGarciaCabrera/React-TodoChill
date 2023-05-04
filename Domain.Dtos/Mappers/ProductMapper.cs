@@ -35,10 +35,10 @@ internal class ProductMapper : IEntityMapper<Product, ProductDto>
         
         return new Product()
         {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            Price = p.Price,
+            Id = p.Id ?? -1,
+            Name = p.Name ?? "",
+            Description = p.Description ?? "",
+            Price = p.Price ?? -1D,
         };
     }
 

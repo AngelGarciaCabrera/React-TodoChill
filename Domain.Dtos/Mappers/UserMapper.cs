@@ -51,10 +51,10 @@ internal class UserMapper : IEntityDependantMapper<User, UserDto>
         
         return new User
         {
-            Id = u.Id,
-            Name = u.Name,
-            Surname = u.Surname,
-            Telephone = u.Telephone,
+            Id = u.Id ?? -1,
+            Name = u.Name ?? "",
+            Surname = u.Surname ?? "",
+            Telephone = u.Telephone ?? "",
             Birthday = u.BirthDay,
         };
     }
