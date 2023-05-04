@@ -16,30 +16,23 @@ internal class ProductMapper : IEntityMapper<Product, ProductDto>
         return _mapper ??= new ProductMapper();
     }
     
-    public Product MapTo(ProductDto p)
+    public Product MapTo(ProductDto? p)
     {
-        return new Product()
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            Price = p.Price,
-        };
+        return MapToWithOut(p);
     }
     
-    public ProductDto MapFrom(Product p)
+    public ProductDto MapFrom(Product? p)
     {
-        return new ProductDto()
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Description = p.Description,
-            Price = p.Price,
-        };
+        return MapFromWithOut(p);
     }
 
-    public Product MapToWithOut(ProductDto p)
+    protected Product MapToWithOut(ProductDto? p)
     {
+        if (p == null)
+        {
+            return new Product();
+        }
+        
         return new Product()
         {
             Id = p.Id,
@@ -49,8 +42,13 @@ internal class ProductMapper : IEntityMapper<Product, ProductDto>
         };
     }
 
-    public ProductDto MapFromWithOut(Product p)
+    protected ProductDto MapFromWithOut(Product? p)
     {
+        if (p == null)
+        {
+            return new ProductDto();
+        }
+        
         return new ProductDto()
         {
             Id = p.Id,

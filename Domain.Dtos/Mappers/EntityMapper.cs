@@ -72,16 +72,6 @@ public class EntityMapper
         return u != null ? ProductMapper.GetInstance().MapFrom(u) : new ProductDto();
     }
     
-    public Product MapToWithOut(ProductDto? u)
-    {
-        return u != null ? ProductMapper.GetInstance().MapToWithOut(u) : new Product();
-    }
-
-    public ProductDto MapFromWithOut(Product? u)
-    {
-        return u != null ? ProductMapper.GetInstance().MapFromWithOut(u) : new ProductDto();
-    }
-
     #endregion
 
     #region CartItem

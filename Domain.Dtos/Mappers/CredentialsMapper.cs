@@ -3,7 +3,7 @@ using Domain.Entities.Models;
 
 namespace de_todo_chill.Domain.us.Mappers;
 
-public class CredentialsMapper : IEntityMapper<Credentials, CredentialsDto>
+public class CredentialsMapper : IEntityDependantMapper<Credentials, CredentialsDto>
 {
     private static CredentialsMapper? _mapper;
 
