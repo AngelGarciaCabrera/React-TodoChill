@@ -6,7 +6,7 @@ namespace de_todo_chill.Domain.us.Mappers;
 public class CredentialsMapper : IEntityMapper<Credentials, CredentialsDto>
 {
     private static CredentialsMapper? _mapper;
-    
+
     private CredentialsMapper()
     {
     }
@@ -15,9 +15,16 @@ public class CredentialsMapper : IEntityMapper<Credentials, CredentialsDto>
     {
         return _mapper ??= new CredentialsMapper();
     }
-    
-    public Credentials MapTo(CredentialsDto e)
+
+    public Credentials MapTo(CredentialsDto? e)
     {
+        var credentials = MapToWithOut(e);
+
+        if (e == null)
+        {
+            return credentials;
+        }
+
         return new Credentials()
         {
             Id = e.Id,
@@ -27,10 +34,10 @@ public class CredentialsMapper : IEntityMapper<Credentials, CredentialsDto>
         };
     }
 
-    public CredentialsDto MapFrom(Credentials e)
+    public CredentialsDto MapFrom(Credentials? e)
     {
         var user = UserMapper.GetInstance().MapFrom(e.User);
-        
+
         return new CredentialsDto()
         {
             Id = e.Id,
@@ -40,7 +47,7 @@ public class CredentialsMapper : IEntityMapper<Credentials, CredentialsDto>
         };
     }
 
-    public Credentials MapToWithOut(CredentialsDto e)
+    public Credentials MapToWithOut(CredentialsDto? e)
     {
         return new Credentials()
         {
@@ -50,7 +57,7 @@ public class CredentialsMapper : IEntityMapper<Credentials, CredentialsDto>
         };
     }
 
-    public CredentialsDto MapFromWithOut(Credentials e)
+    public CredentialsDto MapFromWithOut(Credentials? e)
     {
         return new CredentialsDto()
         {

@@ -2,9 +2,15 @@
 
 public interface IEntityMapper<T, TD>
 {
-    T MapTo(TD e);
-    TD MapFrom(T e);
+    /**If the entity is null, return a new one with empty default values.*/
+    T MapTo(TD? e);
+    
+    /**If the entity is null, return a new one with empty default values.*/
+    TD MapFrom(T? e);
 
-    T MapToWithOut(TD td);
-    TD MapFromWithOut(T t);
+    /**If the entity is null, return a new one with empty default values.*/
+    T MapToWithOut(TD? td);
+    
+    /**If the entity is null, return a new one with empty default values.*/
+    TD MapFromWithOut(T? t);
 }

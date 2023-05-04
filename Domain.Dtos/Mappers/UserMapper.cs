@@ -6,7 +6,7 @@ namespace de_todo_chill.Domain.us.Mappers;
 internal class UserMapper : IEntityMapper<User, UserDto>
 {
     private static UserMapper? _mapper;
-        
+
     private UserMapper()
     {
     }
@@ -16,8 +16,39 @@ internal class UserMapper : IEntityMapper<User, UserDto>
         return _mapper ??= new UserMapper();
     }
 
-    public User MapTo(UserDto u)
+    public User MapTo(UserDto? u)
     {
+        var userMap = MapToWithOut(u);
+        
+        if (u != null)
+        {
+            userMap.Credentials = CredentialsMapper.GetInstance()
+                .MapToWithOut(u.Credentials);
+        }
+
+        return userMap;
+    }
+
+    public UserDto MapFrom(User? u)
+    {
+        var userMap = MapFromWithOut(u);
+
+        if (u != null)
+        {
+           userMap.Credentials = CredentialsMapper.GetInstance()
+                       .MapFromWithOut(u.Credentials);
+        }
+
+        return userMap;
+    }
+
+    public User MapToWithOut(UserDto? u)
+    {
+        if (u == null)
+        {
+            return new User();
+        }
+        
         return new User
         {
             Id = u.Id,
@@ -27,11 +58,9 @@ internal class UserMapper : IEntityMapper<User, UserDto>
             Birthday = u.BirthDay,
         };
     }
-        
-    public UserDto MapFrom(User u)
+
+    public UserDto MapFromWithOut(User? u)
     {
-        var credentials = CredentialsMapper.GetInstance().MapFrom(u.Credentials);
-        
         return new UserDto
         {
             Id = u.Id,
@@ -39,31 +68,6 @@ internal class UserMapper : IEntityMapper<User, UserDto>
             Surname = u.Surname,
             Telephone = u.Telephone,
             BirthDay = u.Birthday,
-            Credentials = credentials,
-        };
-    }
-
-    public User MapToWithOut(UserDto u)
-    {
-        return new User
-        {
-            Id = u.Id,
-            Name = u.Name,
-            Surname = u.Surname,
-            Telephone = u.Telephone,
-            Birthday = u.BirthDay,
-        };
-    }
-
-    public UserDto MapFromWithOut(User u)
-    {
-        return new UserDto
-        {
-            Id = u.Id,
-            Name = u.Name,
-            Surname = u.Surname,
-            Telephone = u.Telephone,
-            BirthDay = u.Birthday
         };
     }
 }
