@@ -3,7 +3,7 @@ using Domain.Entities.Models;
 
 namespace de_todo_chill.Domain.us.Mappers;
 
-internal class SuggestionMapper : IEntityMapper<Suggestion, SuggestionDto>
+internal class SuggestionMapper : IEntityDependantMapper<Suggestion, SuggestionDto>
 {
     private static SuggestionMapper? _mapper;
 
@@ -16,43 +16,56 @@ internal class SuggestionMapper : IEntityMapper<Suggestion, SuggestionDto>
         return _mapper ??= new SuggestionMapper();
     }
 
-    public Suggestion MapTo(SuggestionDto e)
+    public Suggestion MapTo(SuggestionDto? e)
     {
-        return new Suggestion()
+        var suggestion = MapToWithOut(e);
+
+        if (e != null)
         {
-            Id = e.Id,
-            Description = e.Description,
-            UserId = e.User.Id,
-        };
+            suggestion.User = UserMapper.GetInstance()
+                .MapToWithOut(e.User);
+            suggestion.UserId = suggestion.User.Id;
+        }
+
+        return suggestion;
     }
 
-    public SuggestionDto MapFrom(Suggestion e)
+    public SuggestionDto MapFrom(Suggestion? e)
     {
-        var user = UserMapper.GetInstance().MapFrom(e.User);
-        
-        return new SuggestionDto()
+        var suggestion = MapFromWithOut(e);
+
+        if (e != null)
         {
-            Id = e.Id,
-            Description = e.Description,
-            User = user,
-        };
+            suggestion.User = UserMapper.GetInstance()
+                .MapFromWithOut(e.User);
+        }
+
+        return suggestion;
     }
 
-    public Suggestion MapToWithOut(SuggestionDto e)
+    public Suggestion MapToWithOut(SuggestionDto? e)
     {
-        return new Suggestion()
+        var suggestion = new Suggestion();
+
+        if (e != null)
         {
-            Id = e.Id,
-            Description = e.Description,
-        };
+            suggestion.Id = e.Id ?? -1;
+            suggestion.Description = e.Description ?? "";
+        }
+
+        return suggestion;
     }
 
-    public SuggestionDto MapFromWithOut(Suggestion e)
+    public SuggestionDto MapFromWithOut(Suggestion? e)
     {
-        return new SuggestionDto()
+        var suggestion = new SuggestionDto();
+
+        if (e != null)
         {
-            Id = e.Id,
-            Description = e.Description,
-        };
+            suggestion.Id = e.Id;
+            suggestion.Description = e.Description;
+        }
+
+        return suggestion;
     }
 }
