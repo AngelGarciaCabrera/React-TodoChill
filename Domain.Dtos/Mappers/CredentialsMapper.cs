@@ -24,6 +24,7 @@ public class CredentialsMapper : IEntityDependantMapper<Credentials, Credentials
         {
             credentials.User = UserMapper.GetInstance()
                 .MapToWithOut(e.User);
+            credentials.UserId = credentials.User.Id;
         }
 
         return credentials;
