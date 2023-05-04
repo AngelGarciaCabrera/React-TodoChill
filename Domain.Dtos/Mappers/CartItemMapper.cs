@@ -3,7 +3,7 @@ using Domain.Entities.Models;
 
 namespace de_todo_chill.Domain.us.Mappers;
 
-internal class CartItemMapper : IEntityMapper<CartItem, CartItemDto>
+internal class CartItemMapper : IEntityDependantMapper<CartItem, CartItemDto>
 {
     private static CartItemMapper? _mapper;
 
@@ -16,34 +16,39 @@ internal class CartItemMapper : IEntityMapper<CartItem, CartItemDto>
         return _mapper ??= new CartItemMapper();
     }
 
-    public CartItem MapTo(CartItemDto c)
+    public CartItem MapTo(CartItemDto? c)
     {
-        return new CartItem()
+        var cartItem = MapToWithOut(c);
+
+        if (c != null)
         {
-            Id = c.Id,
-            UserId = c.User.Id,
-            ProductId = c.Product.Id,
-            Quantity = c.Quantity,
-        };
+            cartItem.User = UserMapper.GetInstance()
+                .MapToWithOut(c.User);
+        }
+
+        return cartItem;
     }
 
-    public CartItemDto MapFrom(CartItem c)
+    public CartItemDto MapFrom(CartItem? c)
     {
-        var user = UserMapper.GetInstance().MapFrom(c.User);
+        var cartItem = MapFromWithOut(c);
 
-        var product = ProductMapper.GetInstance().MapFrom(c.Product);
+        if (c != null)
+        {
+            cartItem.User = UserMapper.GetInstance()
+                .MapFromWithOut(c.User);
+        }
+
+        return cartItem;
+    }
+
+    public CartItem MapToWithOut(CartItemDto? c)
+    {
+        if (c == null)
+        {
+            return new CartItem();
+        }
         
-        return new CartItemDto()
-        {
-            Id = c.Id,
-            User = user,
-            Product = product,
-            Quantity = c.Quantity,
-        };
-    }
-
-    public CartItem MapToWithOut(CartItemDto c)
-    {
         return new CartItem()
         {
             Id = c.Id,
@@ -51,8 +56,13 @@ internal class CartItemMapper : IEntityMapper<CartItem, CartItemDto>
         };
     }
 
-    public CartItemDto MapFromWithOut(CartItem c)
+    public CartItemDto MapFromWithOut(CartItem? c)
     {
+        if (c == null)
+        {
+            return new CartItemDto();
+        }
+        
         return new CartItemDto()
         {
             Id = c.Id,
